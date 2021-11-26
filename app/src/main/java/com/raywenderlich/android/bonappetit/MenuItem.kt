@@ -36,7 +36,6 @@ package com.raywenderlich.android.bonappetit
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.icons.Icons
@@ -50,9 +49,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.selected
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -64,37 +60,10 @@ fun MenuItem(
   modifier: Modifier = Modifier
 ) {
   // Semantics Modifier
-  val selectedDescription = stringResource(R.string.description_selected)
-  val unselectedDescription = stringResource(R.string.description_unselected)
-  val semanticsModifier = Modifier.semantics(mergeDescendants = true) {
-    stateDescription = if (dish.selected) {
-      selectedDescription
-    } else {
-      unselectedDescription
-    }
-    selected = dish.selected
-  }
+  val semanticsModifier = Modifier
 
   // Clickable modifier
-  // Note for reviewers: We will explore both the clickable and
-  // selectable modifier options in the tutorial, but the final
-  // project will only have one. They're only both here now for
-  // your review.
-  val selectActionDescription = stringResource(R.string.description_action_order)
-  val unselectActionDescription = stringResource(R.string.description_action_remove_order)
-  val clickableModifier = Modifier.clickable(
-    onClickLabel = if (dish.selected) {
-      unselectActionDescription
-    } else {
-      selectActionDescription
-    }
-  ) {
-    onDishSelected(dish)
-  }
-//      .selectable(
-//        selected = dish.selected,
-//        onClick = { onDishSelected(dish) }
-//      )
+  val clickableModifier = Modifier
 
   Row(
     verticalAlignment = Alignment.CenterVertically,
@@ -130,7 +99,7 @@ fun MenuItem(
 private fun DishImage(dish: Dish) {
   Image(
     painter = painterResource(dish.imageRes),
-    contentDescription = null,
+    contentDescription = "Image",
     modifier = Modifier.size(42.dp)
   )
 }
@@ -157,13 +126,13 @@ private fun AddOrRemoveIcon(dish: Dish) {
   if (dish.selected) {
     Icon(
       imageVector = Icons.Filled.Check,
-      contentDescription = null,
+      contentDescription = "State",
       tint = colorPrimary
     )
   } else {
     Icon(
       imageVector = Icons.Filled.Add,
-      contentDescription = null,
+      contentDescription = "State",
       tint = colorPrimary
     )
   }
