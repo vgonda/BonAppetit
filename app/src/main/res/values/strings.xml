@@ -1,3 +1,28 @@
 <resources>
   <string name="app_name">Bon Appetit</string>
+  <string name="attribute_spicy">Spicy</string>
+  <string name="attribute_veggie">Vegetarian</string>
+  <string name="attribute_gf">Gluten Free</string>
+  <string name="category_drink">Drink</string>
+  <string name="category_food">Food</string>
+  <string name="dish_big_breakfast_name">10x Breakfast</string>
+  <string name="dish_big_breakfast_description">A breakfast fit for the hungriest developer. Sausage, eggs and potatoes will keep you fueled for a day of programming.</string>
+  <string name="dish_mimosa_name">Bubbly Mimosa</string>
+  <string name="dish_mimosa_description">Champagne and a splash of orange juice. The perfect way to celebrate a successful release.</string>
+  <string name="dish_coffee_name">Fresh Coffee</string>
+  <string name="dish_coffee_description">The standard fuel for a developer.</string>
+  <string name="dish_mvp_breakfast_name">MVP Breakfast</string>
+  <string name="dish_mvp_breakfast_description">A simple egg breakfast is the Minimum Viable Product to start your day.</string>
+  <string name="dish_cereal_name">Droid O\'s</string>
+  <string name="dish_cereal_description">A spicy cereal developed specially for Android engineers.</string>
+  <string name="dish_pancakes_name">Stack overflow</string>
+  <string name="dish_pancakes_description">All you can eat stack of pancakes. Be careful so your stomach doesn\'t overflow!</string>
+  <string name="dish_apple_pie_name">Apple Strudel</string>
+  <string name="dish_apple_pie_description">For the Android developer who wants to get a taste of iOS development. Eat it Swiftly.</string>
+  <string name="dish_pizza_name">Morning Pizza</string>
+  <string name="dish_pizza_description">The heat comes from the peppers. We know sometime there\'s no better breakfast than cold pizza.</string>
+  <string name="description_selected">Ordered</string>
+  <string name="description_unselected">Not Ordered</string>
+  <string name="description_action_order">Order</string>
+  <string name="description_action_remove_order">Remove from order</string>
 </resources>

@@ -34,28 +34,79 @@
 
 package com.raywenderlich.android.bonappetit
 
-import android.os.Bundle
-import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.*
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
 
-/**
- * Main Screen
- */
-class MainActivity : AppCompatActivity() {
+@RunWith(AndroidJUnit4::class)
+class MenuItemTest {
 
-  private val menuViewModel: MenuViewModel by viewModels()
+  @get:Rule
+  val composeTestRule = createComposeRule()
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    // Switch to AppTheme for displaying the activity
-    setTheme(R.style.AppTheme)
+  private val testDish = Dish(
+    nameRes = R.string.dish_big_breakfast_name,
+    descriptionRes = R.string.dish_big_breakfast_description,
+    imageRes = R.drawable.breakfast_sausage_egg_w150,
+    category = Dish.Category.FOOD,
+    attributes = listOf(Dish.Attribute.GlutenFree)
+  )
+  private val testTag = "Menu item test tag"
 
-    super.onCreate(savedInstanceState)
-
-    setContent {
-      RWTheme {
-        MenuScreen(menuViewModel)
-      }
+  @Test
+  fun isSelectable() {
+    composeTestRule.setContent {
+      MenuItem(
+        dish = testDish,
+        onDishSelected = {},
+        modifier = Modifier.testTag(testTag)
+      )
     }
+
+    composeTestRule.onNodeWithTag(testTag).assertIsSelectable()
+  }
+
+  @Test
+  fun isSelected() {
+    composeTestRule.setContent {
+      MenuItem(
+        dish = testDish.copy(selected = true),
+        onDishSelected = {},
+        modifier = Modifier.testTag(testTag)
+      )
+    }
+
+    composeTestRule.onNodeWithTag(testTag).assertIsSelected()
+  }
+
+  @Test
+  fun isNotSelectable() {
+    composeTestRule.setContent {
+      MenuItem(
+        dish = testDish.copy(selected = false),
+        onDishSelected = {},
+        modifier = Modifier.testTag(testTag)
+      )
+    }
+
+    composeTestRule.onNodeWithTag(testTag).assertIsNotSelected()
+  }
+
+  @Test
+  fun hasAttributeContentDescription() {
+    val contentDescription = "Gluten Free"
+    composeTestRule.setContent {
+      MenuItem(
+        dish = testDish,
+        onDishSelected = {},
+      )
+    }
+
+    composeTestRule.onNodeWithContentDescription(contentDescription).assertIsDisplayed()
   }
 }
