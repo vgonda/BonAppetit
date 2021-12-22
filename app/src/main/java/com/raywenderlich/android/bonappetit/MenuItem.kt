@@ -37,6 +37,7 @@ package com.raywenderlich.android.bonappetit
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -49,6 +50,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -60,10 +63,37 @@ fun MenuItem(
   modifier: Modifier = Modifier
 ) {
   // Semantics Modifier
-  val semanticsModifier = Modifier
+  val selectedDescription =
+    stringResource(R.string.description_selected)
+  val unselectedDescription =
+    stringResource(R.string.description_unselected)
+  val semanticsModifier =
+    Modifier.semantics(mergeDescendants = true) {
+      stateDescription = if (dish.selected) {
+        selectedDescription
+      } else {
+        unselectedDescription
+      }
+    }
 
   // Clickable modifier
-  val clickableModifier = Modifier
+  val selectActionDescription =
+    stringResource(R.string.description_action_order)
+  val unselectActionDescription =
+    stringResource(R.string.description_action_remove_order)
+//  val clickableModifier = Modifier.clickable(
+//    onClickLabel = if (dish.selected) {
+//      unselectActionDescription
+//    } else {
+//      selectActionDescription
+//    }
+//  ) {
+//    onDishSelected(dish)
+//  }
+  val clickableModifier = Modifier.selectable(
+    selected = dish.selected,
+    onClick = { onDishSelected(dish) }
+  )
 
   Row(
     verticalAlignment = Alignment.CenterVertically,
@@ -99,7 +129,7 @@ fun MenuItem(
 private fun DishImage(dish: Dish) {
   Image(
     painter = painterResource(dish.imageRes),
-    contentDescription = "Image",
+    contentDescription = null,
     modifier = Modifier.size(42.dp)
   )
 }
@@ -126,13 +156,13 @@ private fun AddOrRemoveIcon(dish: Dish) {
   if (dish.selected) {
     Icon(
       imageVector = Icons.Filled.Check,
-      contentDescription = "State",
+      contentDescription = null,
       tint = colorPrimary
     )
   } else {
     Icon(
       imageVector = Icons.Filled.Add,
-      contentDescription = "State",
+      contentDescription = null,
       tint = colorPrimary
     )
   }

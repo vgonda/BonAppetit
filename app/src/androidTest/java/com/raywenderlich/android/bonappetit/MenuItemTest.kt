@@ -34,9 +34,13 @@
 
 package com.raywenderlich.android.bonappetit
 
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
@@ -53,4 +57,58 @@ class MenuItemTest {
     attributes = listOf(Dish.Attribute.GlutenFree)
   )
   private val testTag = "Menu item test tag"
+
+  @Test
+  fun hasAttributeContentDescription() {
+    val contentDescription = "Gluten Free"
+    composeTestRule.setContent {
+      MenuItem(
+        dish = testDish,
+        onDishSelected = {},
+      )
+    }
+
+    composeTestRule
+      .onNodeWithContentDescription(contentDescription)
+      .assertIsDisplayed()
+  }
+
+  @Test
+  fun isSelectable() {
+    composeTestRule.setContent {
+      MenuItem(
+        dish = testDish,
+        onDishSelected = {},
+        modifier = Modifier.testTag(testTag)
+      )
+    }
+
+    composeTestRule.onNodeWithTag(testTag).assertIsSelectable()
+  }
+
+  @Test
+  fun isSelected() {
+    composeTestRule.setContent {
+      MenuItem(
+        dish = testDish.copy(selected = true),
+        onDishSelected = {},
+        modifier = Modifier.testTag(testTag)
+      )
+    }
+
+    composeTestRule.onNodeWithTag(testTag).assertIsSelected()
+  }
+
+  @Test
+  fun isNotSelected() {
+    composeTestRule.setContent {
+      MenuItem(
+        dish = testDish.copy(selected = false),
+        onDishSelected = {},
+        modifier = Modifier.testTag(testTag)
+      )
+    }
+
+    composeTestRule.onNodeWithTag(testTag).assertIsNotSelected()
+  }
 }

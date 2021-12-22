@@ -42,6 +42,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -51,7 +52,7 @@ fun DishAttributes(attributes: List<Dish.Attribute>) {
     attributes.sorted().forEach {
       Image(
         painter = painterResource(it.iconRes),
-        contentDescription = "Attribute",
+        contentDescription = stringResource(it.descriptionRes),
         modifier = Modifier.height(16.dp)
       )
       Spacer(modifier = Modifier.width(2.dp))
